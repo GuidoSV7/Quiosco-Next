@@ -5,11 +5,10 @@ import Heading from "@/components/ui/Heading"
 import { prisma } from "@/src/lib/prisma"
 import { notFound } from "next/navigation"
 
-// Define proper types for the page props
-interface PageProps {
-  params: {
-    id: string;
-  }
+// Properly typing the params object for Next.js
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 async function getProductById(id: number) {
@@ -26,7 +25,7 @@ async function getProductById(id: number) {
   return product
 }
 
-export default async function EditProductsPage({ params }: PageProps) {
+export default async function EditProductsPage({ params }: Props) {
   const product = await getProductById(+params.id)
   
   return (
