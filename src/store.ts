@@ -16,7 +16,7 @@ export const useStore = create<Store>((set, get) => ({
 
     order: [],
     addToOrder: (product) => {
-        const {categoryId, image, ...data} = product
+        const {  ...data} = product
 
         let order:OrderItem[] = []
         const orders = get().order
@@ -36,7 +36,7 @@ export const useStore = create<Store>((set, get) => ({
         }
         
 
-        set((state) => ({
+        set(() => ({
             order
 
         }) )
@@ -50,7 +50,7 @@ export const useStore = create<Store>((set, get) => ({
             subtotal: item.price * (item.quantity + 1)
         } : item)
 
-        set((state) => ({
+        set(() => ({
             order
         }))
     },
@@ -67,7 +67,7 @@ export const useStore = create<Store>((set, get) => ({
         }: item)
 
 
-        set((state) => ({
+        set(() => ({
             order
         }))
 
@@ -76,7 +76,7 @@ export const useStore = create<Store>((set, get) => ({
     removeItem: (id) => {
         const orders = get().order
         const order = orders.filter(item => item.id !== id)
-        set((state) => ({
+        set(() => ({
             order
         }))
     },
