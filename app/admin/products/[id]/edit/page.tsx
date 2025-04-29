@@ -3,42 +3,45 @@ import ProductForm from "@/components/products/ProductForm"
 import GoBackButton from "@/components/ui/GoBackButton"
 import Heading from "@/components/ui/Heading"
 import { prisma } from "@/src/lib/prisma"
-import { notFound } from "next/navigation"
+import { notFound} from "next/navigation"
 
-// Properly typing the params object for Next.js
-type Props = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+async function getProductById(id:number){
+    const product = await prisma.product.findUnique({
+        where: {
+            id
+        }
+    })
 
-async function getProductById(id: number) {
-  const product = await prisma.product.findUnique({
-    where: {
-      id
+    if(!product){
+        notFound()
     }
-  })
-  
-  if (!product) {
-    notFound()
-  }
-  
-  return product
+    return product
 }
 
-export default async function EditProductsPage({ params }: Props) {
-  const product = await getProductById(+params.id)
-  
+
+export default async function EditProductsPage({
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  }) {
+
+      // Resuelve la promesa de `params` antes de acceder a sus propiedades
+  const { id } = await params;
+
+      // Convierte `id` a número entero
+  const product = await getProductById(parseInt(id, 10));
+
   return (
     <>
-      <Heading>Editar Producto: {product.name}</Heading>
-      
-      <GoBackButton />
-      
-      <EditProductForm>
-        <ProductForm
-          product={product}
-        />
-      </EditProductForm>
+        <Heading>Editar Producto: {product.name}</Heading>
+
+        <GoBackButton/>
+
+        <EditProductForm>
+            <ProductForm
+                product={product}
+            />
+        </EditProductForm>
     </>
   )
 }
