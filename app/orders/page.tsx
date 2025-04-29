@@ -17,7 +17,7 @@ export default function OrdersPage() {
   
    
   
-    if(isLoading) return <p>'Cargando...'</p>
+    if(isLoading) return <p>Cargando...</p>
   
     
     
