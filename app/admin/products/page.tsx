@@ -23,7 +23,7 @@ async function getProducts(page: number, pageSize: number) {
     })
     return products
 }
-
+//hola
 export type ProductsWithCategory = Awaited<ReturnType<typeof getProducts>>
 
 export default async function ProductsPage({params} : {params: Promise<{page: string}>}) {
